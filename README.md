@@ -1,2 +1,2 @@
 # OpenFork
-Text Editor and Formatter
+Text Editor and Formatter (JSON at the moment)
