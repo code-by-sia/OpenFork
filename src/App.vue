@@ -38,7 +38,14 @@ export default class App extends Vue {
     }
   ];
   history: Action[] = [{ name: "redo" }, { name: "undo" }];
-  data: string = "";
+  data: string = `{
+    "name":"Open Fork",
+    "version":0.1,
+    "author": {
+      "name":"Siamand",
+      "web":"https://siamand.css"
+    }
+  }`;
 
   async onClipboard(action: string) {
     if (action === "paste") {
@@ -52,14 +59,18 @@ export default class App extends Vue {
     try {
       this.data = JSON.parse(this.data);
       this.data = JSON.stringify(this.data, null, 2);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   minify() {
     try {
       this.data = JSON.parse(this.data);
       this.data = JSON.stringify(this.data);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 </script>
@@ -78,11 +89,7 @@ export default class App extends Vue {
         </control-box>
 
         <control-box label="Clipboard" class="independent">
-          <action-group
-            :value="clipboard"
-            class="clipboard"
-            @action="onClipboard"
-          >
+          <action-group :value="clipboard" class="clipboard" @action="onClipboard">
             <i slot="copy" class="fa fa-copy" />
             <i slot="paste" class="fa fa-paste" />
           </action-group>
@@ -115,34 +122,31 @@ export default class App extends Vue {
             <i class="fab fa-osi"></i>
           </span>
         </control-box>
-        <control-box
-          label="About Open Web Sheet Project"
-          style="flex:1;"
-          :grid="false"
-        >
+        <control-box label="About Open Web Sheet Project" style="flex:1;" :grid="false">
           <span style="flex: 1">
-            Designed and developed by <strong>Siamand Maroufi</strong><br />
-            3rd Parties: <strong>FontAwesome Icons</strong> &
-            <strong>Google noto web font</strong><br />
-            Licence: <strong>MIT Licence</strong>
+            Designed and developed by
+            <strong>Siamand Maroufi</strong>
+            <br />3rd Parties:
+            <strong>FontAwesome Icons</strong> &
+            <strong>Google noto web font</strong>
+            <br />Licence:
+            <strong>MIT Licence</strong>
           </span>
           <span style="align-self: flex-start">
             <a href="https://siamand.cc">
-              <i class="fa fa-link"></i> Developer's site</a
-            >
+              <i class="fa fa-link"></i> Developer's site
+            </a>
             |
-            <a href="https://github.com/SiamandMaroufi/OpenFork"
-              ><i class="fab fa-github"></i> Source Code</a
-            >
+            <a href="https://github.com/SiamandMaroufi/OpenFork">
+              <i class="fab fa-github"></i> Source Code
+            </a>
           </span>
         </control-box>
       </div>
     </ribbon>
-    <editor v-if="active === 'editor'" v-model="data" />
-    <viewer v-else-if="active === 'viewer'" />
-    <div v-else>
-      nothing here yet ...
-    </div>
+    <editor v-if="active === 'editor'" v-model="data" style="flex:1" />
+    <viewer v-model="data" v-else-if="active === 'viewer'" style="flex:1" />
+    <div v-else>nothing here yet ...</div>
   </div>
 </template>
 

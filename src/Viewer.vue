@@ -1,13 +1,41 @@
-<script>
+<script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
+import ObjectViewer from "./ObjectViewer.vue";
 
-@Component({ name: "viewer" })
-export default class Viewer extends Vue {}
+@Component({
+  name: "viewer",
+  components: {
+    ObjectViewer
+  }
+})
+export default class Viewer extends Vue {
+  @Prop()
+  value!: string;
+
+  get root(): any {
+    if (!this.value) return {};
+    return JSON.parse(this.value);
+  }
+
+  set root(newValue: any) {
+    this.$emit("input", JSON.stringify(newValue, null, 2));
+  }
+}
 </script>
 
 <template>
   <div class="viewer">
-    viewer
+    <object-viewer v-model="root" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+div.viewer {
+  font-family: sans-serif;
+  font-size: 14px;
+  display: flex;
+  flex: 1;
+  padding: 10px;
+}
+</style>
