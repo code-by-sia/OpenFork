@@ -89,7 +89,11 @@ export default class App extends Vue {
         </control-box>
 
         <control-box label="Clipboard" class="independent">
-          <action-group :value="clipboard" class="clipboard" @action="onClipboard">
+          <action-group
+            :value="clipboard"
+            class="clipboard"
+            @action="onClipboard"
+          >
             <i slot="copy" class="fa fa-copy" />
             <i slot="paste" class="fa fa-paste" />
           </action-group>
@@ -122,12 +126,15 @@ export default class App extends Vue {
             <i class="fab fa-osi"></i>
           </span>
         </control-box>
-        <control-box label="About Open Web Sheet Project" style="flex:1;" :grid="false">
+        <control-box
+          label="About Open Web Sheet Project"
+          style="flex:1;"
+          :grid="false"
+        >
           <span style="flex: 1">
             Designed and developed by
             <strong>Siamand Maroufi</strong>
-            <br />3rd Parties:
-            <strong>FontAwesome Icons</strong> &
+            <br />3rd Parties: <strong>FontAwesome Icons</strong> &
             <strong>Google noto web font</strong>
             <br />Licence:
             <strong>MIT Licence</strong>

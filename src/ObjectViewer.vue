@@ -35,27 +35,34 @@ export default class ObjectViewer extends Vue {
 <template>
   <div class="viewer">
     <span v-if="name" class="name">{{ name }}:</span>
-    <div class="props" v-if="typeof value=='object'">
+    <div class="props" v-if="typeof value == 'object'">
       <div class="array" v-if="Array.isArray(value)">
         [
-        <div class="item" v-for="(children,name) in value" :key="name">
+        <div class="item" v-for="(children, name) in value" :key="name">
           <object-viewer :value="children" />
-        </div>]
+        </div>
+        ]
       </div>
       <template v-else>
         {
         <div class="object">
           <object-viewer
-            v-for="(children,name) in value"
+            v-for="(children, name) in value"
             :key="name"
             :value="children"
             :name="name"
-            @change="change=> onChange(name,change)"
+            @change="change => onChange(name, change)"
           />
-        </div>}
+        </div>
+        }
       </template>
     </div>
-    <input v-else :value="objectValue" type="text" @change="v=> $emit('change',v.target.value)" />
+    <input
+      v-else
+      :value="objectValue"
+      type="text"
+      @change="v => $emit('change', v.target.value)"
+    />
   </div>
 </template>
 
