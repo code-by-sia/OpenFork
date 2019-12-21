@@ -1,6 +1,6 @@
 module.exports = {
   pwa: {
-    name: "Open Fork(JSON Editor)",
+    name: "Open Fork (JSON Editor)",
     themeColor: "#00454d",
     msTileColor: "#000000",
     appleMobileWebAppCapable: "yes",
