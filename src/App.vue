@@ -77,7 +77,7 @@ export default class App extends Vue {
 
 <template>
   <div id="app">
-    <ribbon :menu="menu" v-model="active" style="position: sticky">
+    <ribbon :menu="menu" v-model="active" style="position: sticky;top:0;">
       <div slot="editor">
         <control-box label="Data" class="last">
           <action-button label="load from url">
