@@ -26,7 +26,7 @@ export default class Viewer extends Vue {
 
 <template>
   <div class="viewer">
-    <object-viewer v-model="root" />
+    <object-viewer v-model="root" is-open="true" />
   </div>
 </template>
 
