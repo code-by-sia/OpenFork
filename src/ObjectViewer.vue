@@ -141,6 +141,7 @@ div.object-viewer {
     position: relative;
 
     i.icon {
+      cursor: pointer;
       position: absolute;
       left: -13px;
       top: 4px;
