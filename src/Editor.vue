@@ -1,8 +1,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
+import UI from "light-vui";
 
-@Component({ name: "Editor" })
+@Component({
+  name: "Editor",
+  components: {
+    UI.Action
+  }
+})
 export default class Editor extends Vue {
   private regex = /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g;
 
@@ -41,17 +47,10 @@ export default class Editor extends Vue {
     <textarea v-if="editMode" v-model="text" @blur="editMode = false" />
     <div class="rendered" @dblclick="editMode = true" v-else>
       <div class="lines">
-        <div class="line" v-for="(line, index) in lines" :key="index">
-          {{ index + 1 }}
-        </div>
+        <div class="line" v-for="(line, index) in lines" :key="index">{{ index + 1 }}</div>
       </div>
       <div class="content">
-        <span
-          :key="index"
-          class="line"
-          v-for="(line, index) in lines"
-          v-html="formatLine(line)"
-        ></span>
+        <span :key="index" class="line" v-for="(line, index) in lines" v-html="formatLine(line)"></span>
       </div>
     </div>
   </div>

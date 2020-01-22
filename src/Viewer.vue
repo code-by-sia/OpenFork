@@ -3,6 +3,8 @@ import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import ObjectViewer from "./ObjectViewer.vue";
 
+import { Panel } from "light-vui/docs/js/app.67c83406";
+
 @Component({
   name: "viewer",
   components: {
