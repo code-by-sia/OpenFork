@@ -72,6 +72,15 @@ export default class App extends Vue {
       console.error(e);
     }
   }
+
+  async loadFile(event: any) {
+    this.data = await event.target.files[0].text();
+  }
+
+  selectFile(){
+    const el = document.getElementById('file_input');
+    el && el.click();
+  }
 }
 </script>
 
@@ -80,11 +89,13 @@ export default class App extends Vue {
     <ribbon :menu="menu" v-model="active" style="position: sticky;top:0;">
       <div slot="editor">
         <control-box label="Data" class="last">
-          <action-button label="load from url">
-            <i slot="prefix" class="fa fa-link" />
-          </action-button>
-          <action-button label="load from file">
+          <action-button @click="selectFile"
+            label="load from file"
+          >
             <i slot="prefix" class="fa fa-file" />
+          </action-button>
+          <action-button disabled label="load from url">
+            <i slot="prefix" class="fa fa-link" />
           </action-button>
         </control-box>
 
@@ -154,6 +165,12 @@ export default class App extends Vue {
     <editor v-if="active === 'editor'" v-model="data" style="flex:1" />
     <viewer v-model="data" v-else-if="active === 'viewer'" style="flex:1" />
     <div v-else>nothing here yet ...</div>
+    <input
+      id="file_input"
+      type="file"
+      @change="x => loadFile(x)"
+      style="position:absolute;visibility:hidden"
+    />
   </div>
 </template>
 
