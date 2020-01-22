@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import Ribbon from "@/components/Ribbon.vue";
 import ControlBox from "@/components/ControlBox.vue";
 import { RibbonMenuItem } from "@/components/RibbonMenu";
@@ -37,7 +37,10 @@ export default class App extends Vue {
       label: "Paste"
     }
   ];
-  history: Action[] = [{ name: "redo" }, { name: "undo" }];
+  history: Action[] = [
+    { name: "redo", disabled: true },
+    { name: "undo", disabled: true }
+  ];
   data: string = `{
     "name":"Open Fork",
     "version":0.1,
@@ -47,12 +50,29 @@ export default class App extends Vue {
     }
   }`;
 
+  historyChanging = false;
+
+  historyItems: string[] = [];
+  historyIndex = -1;
+
   async onClipboard(action: string) {
     if (action === "paste") {
       this.data = await navigator.clipboard.readText();
     } else if (action === "copy") {
       navigator.clipboard.writeText(this.data);
     }
+  }
+
+  onHistory(action: string) {
+    this.historyChanging = true;
+    if (action === "undo" && this.historyItems[this.historyIndex - 1]) {
+      const item = this.historyItems[--this.historyIndex];
+      if (item) this.data = item;
+    } else if (action === "redo" && this.historyItems[this.historyIndex + 1]) {
+      const item = this.historyItems[++this.historyIndex];
+      if (item) this.data = item;
+    }
+    this.historyChanging = false;
   }
 
   format() {
@@ -74,12 +94,26 @@ export default class App extends Vue {
   }
 
   async loadFile(event: any) {
+    this.clearHistory();
     this.data = await event.target.files[0].text();
   }
 
-  selectFile(){
-    const el = document.getElementById('file_input');
+  selectFile() {
+    const el = document.getElementById("file_input");
     el && el.click();
+  }
+
+  clearHistory() {
+    this.historyItems = [];
+    this.historyIndex = -1;
+  }
+
+  @Watch("data", { deep: true })
+  onChange(newData: string, oldData: string) {
+    if (!this.historyChanging) {
+      this.historyIndex++;
+      this.historyItems = [...this.historyItems, oldData];
+    }
   }
 }
 </script>
@@ -89,9 +123,7 @@ export default class App extends Vue {
     <ribbon :menu="menu" v-model="active" style="position: sticky;top:0;">
       <div slot="editor">
         <control-box label="Data" class="last">
-          <action-button @click="selectFile"
-            label="load from file"
-          >
+          <action-button @click="selectFile" label="load from file">
             <i slot="prefix" class="fa fa-file" />
           </action-button>
           <action-button disabled label="load from url">
@@ -115,10 +147,10 @@ export default class App extends Vue {
           <action-button label="Format Text" @click="format" />
         </control-box>
         <control-box label="Content">
-          <action-button label="Clear">
+          <action-button label="Clear" @click="data = '{}'">
             <i slot="postfix" class="fa fa-eraser" />
           </action-button>
-          <action-group :value="history" class="history">
+          <action-group :value="history" class="history" @action="onHistory">
             <span class="action" slot="undo">
               <span>Undo</span>
               <i class="fa fa-undo" />
