@@ -3,6 +3,10 @@
   "author": "Siamand(Cyaxares)",
   "version": "0.1.2",
   "private": true,
+  "repository": {
+    "url": "https://github.com/SiamandMaroufi/OpenFork",
+    "type": "git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

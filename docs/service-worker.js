@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/OpenFork/precache-manifest.c5d4fa98191f977ea8649b4ed8330b76.js"
+  "/OpenFork/precache-manifest.695d8fa256de5a5de0ab258869802fa5.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "openfork"});
