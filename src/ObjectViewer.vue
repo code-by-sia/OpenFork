@@ -51,6 +51,18 @@ export default class ObjectViewer extends Vue {
     this.$emit("input", this.objectValue);
   }
 
+  copyNameToClipboard() {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(this.name);
+    }
+  }
+
+  copyValueToClipboard() {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(JSON.stringify(this.objectValue));
+    }
+  }
+
   applyType(newVal: any, name: string) {
     if (typeof this.value[name] == "number" && !isNaN(newVal)) {
       return newVal * 1;
@@ -62,7 +74,13 @@ export default class ObjectViewer extends Vue {
 
 <template>
   <div class="object-viewer">
-    <span v-if="name" class="name">{{ name }}:</span>
+    <span
+      v-if="name"
+      class="name"
+      @dblclick="copyNameToClipboard()"
+      @click="copyValueToClipboard()"
+      >{{ name }}:</span
+    >
     <div class="props" :class="{ open }" v-if="isObject">
       <i
         v-if="expandable"
@@ -163,13 +181,16 @@ span.name {
 
 .object {
   border: dotted thin transparent;
+
   &:hover {
     border: dotted thin #cccccc;
     border-radius: 5px;
   }
+
   margin: 5px;
   display: none;
 }
+
 .place-holder {
   display: inline-block;
   border: solid thin #ccc;
@@ -177,10 +198,12 @@ span.name {
   border-radius: 4px;
   cursor: pointer;
   background: lightgoldenrodyellow;
+
   &:hover {
     background: yellow;
   }
 }
+
 .open {
   .object {
     display: block;
