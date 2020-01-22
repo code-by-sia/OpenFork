@@ -22,6 +22,11 @@ export default class ObjectViewer extends Vue {
     const newVal = this.applyType(change, name);
     this.$set(this.objectValue, name, newVal);
     this.objectValue = this.objectValue;
+    this.$emit("input", this.objectValue);
+    this.$emit("value-changed", this.objectValue);
+  }
+  onValueChanged() {
+    this.$emit("input", this.objectValue);
   }
   applyType(newVal: any, name: string) {
     if (typeof this.value[name] == "number" && !isNaN(newVal)) {
@@ -52,6 +57,7 @@ export default class ObjectViewer extends Vue {
             :value="children"
             :name="name"
             @change="change => onChange(name, change)"
+            @value-changed="onValueChanged"
           />
         </div>
         }
