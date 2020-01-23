@@ -85,9 +85,8 @@ export default class Editor extends Vue {
         flex-direction: column;
         border-right: dotted thin;
         padding: 10px;
-        :last-child {
-          display: none;
-        }
+        line-height: 22px;
+        box-shadow: -2px 0 4px 0 #eeeeee inset;
       }
 
       & .content {
@@ -95,12 +94,15 @@ export default class Editor extends Vue {
         flex: 1;
         flex-direction: column;
         & .line {
+          border-bottom: solid thin transparent;
           &:hover {
             background: #ffd;
             border-bottom: dotted thin #ccc;
           }
           & span.str {
             color: #0b2785;
+            font-weight: bold;
+            font-style: italic;
           }
         }
       }
