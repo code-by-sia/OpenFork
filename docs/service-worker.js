@@ -11,18 +11,16 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts(
-  "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js"
-);
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/OpenFork/precache-manifest.bdec714839fec860cdfa42357e7edc65.js"
+  "/OpenFork/precache-manifest.e6b0fb95c32c3328475e8e61fd23a852.js"
 );
 
-workbox.core.setCacheNameDetails({ prefix: "openfork" });
+workbox.core.setCacheNameDetails({prefix: "openfork"});
 
-self.addEventListener("message", event => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
