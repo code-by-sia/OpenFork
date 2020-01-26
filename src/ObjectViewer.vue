@@ -1,6 +1,6 @@
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 
 @Component({ name: "ObjectViewer" })
 export default class ObjectViewer extends Vue {
@@ -9,6 +9,9 @@ export default class ObjectViewer extends Vue {
 
   @Prop()
   name?: any;
+
+  @Prop({ required: true })
+  keyName!: string;
 
   @Prop()
   isOpen?: boolean;
@@ -36,7 +39,16 @@ export default class ObjectViewer extends Vue {
   }
 
   mounted() {
-    this.open = this.isOpen || false;
+    this.open = this.isOpen || !!localStorage.getItem(this.keyName);
+  }
+
+  @Watch("open")
+  onToggleChanged(value: boolean) {
+    if (value) {
+      localStorage.setItem(this.keyName, "1");
+    } else {
+      localStorage.removeItem(this.keyName);
+    }
   }
 
   onChange(name: string, change: any) {
@@ -91,8 +103,16 @@ export default class ObjectViewer extends Vue {
       <div class="array" v-if="isArray">
         [
         <template v-if="open">
-          <div class="item" v-for="(children, name) in value" :key="name">
-            <object-viewer :value="children" />
+          <div
+            class="item"
+            v-for="(children, childName) in value"
+            :key="childName"
+          >
+            <object-viewer
+              :value="children"
+              :name="name"
+              :key-name="`${keyName}[${childName}]`"
+            />
           </div>
         </template>
         <template v-else>
@@ -104,11 +124,12 @@ export default class ObjectViewer extends Vue {
         {
         <div class="object" v-if="open">
           <object-viewer
-            v-for="(children, name) in value"
-            :key="name"
+            v-for="(children, childName) in value"
+            :key="childName"
+            :key-name="`${keyName}.${childName}`"
+            :name="childName"
             :value="children"
-            :name="name"
-            @change="change => onChange(name, change)"
+            @change="change => onChange(childName, change)"
             @value-changed="onValueChanged"
           />
         </div>
