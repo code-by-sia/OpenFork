@@ -62,7 +62,7 @@ export default class Editor extends Vue {
   display: flex;
   flex: 1;
   border: solid;
-
+  background: white;
   textarea {
     width: 100%;
     resize: none;

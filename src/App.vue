@@ -120,7 +120,7 @@ export default class App extends Vue {
 
 <template>
   <div id="app">
-    <ribbon :menu="menu" v-model="active" style="position: sticky;top:0;">
+    <ribbon :menu="menu" v-model="active" class="header-menu">
       <div slot="editor">
         <control-box label="Data" class="last">
           <action-button @click="selectFile" label="load from file">
@@ -214,6 +214,12 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
   font-size: 12px;
+
+  .header-menu {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
 }
 
 .clipboard i {

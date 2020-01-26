@@ -168,7 +168,7 @@ span.name {
   display: inline;
 
   min-width: 70px;
-  margin: auto 4px;
+  margin: auto 14px auto 0;
   font-weight: bold;
   cursor: pointer;
 
