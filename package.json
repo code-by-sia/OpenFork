@@ -2,7 +2,7 @@
   "name": "openfork",
   "author": "Siamand(Cyaxares)",
   "version": "0.1.4",
-  "private": true,
+  "private": false,
   "repository": {
     "url": "https://github.com/SiamandMaroufi/OpenFork",
     "type": "git"
